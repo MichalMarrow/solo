@@ -20,19 +20,20 @@ function Users() {
       })
       .catch((errr) => console.log(errr));
   };
+  console.log('users', users);
 
   return (
-    <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
-      <div className='w-50 bg-white rounded p-3'>
-        <Link to='/create' className='btn btn-success'>
+    <div class='d-flex vh-100 bg-primary justify-content-center align-items-center'>
+      <div class='w-50 bg-white rounded p-3'>
+        <Link to='/create' class='btn btn-success'>
           Add +
         </Link>
-        <table className='table'>
+        <table class='table'>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Blood</th>
-              <th>Age</th>
+              <th>date</th>
+              <th>Blood Pressure</th>
+              <th>Heart Rate</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -40,18 +41,15 @@ function Users() {
             {users.map((user) => {
               return (
                 <tr key={user._id}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.age}</td>
+                  <td>{user.date}</td>
+                  <td>{user.bloodPressure}</td>
+                  <td>{user.heartRate}</td>
                   <td>
-                    <Link
-                      to={`/update/${user._id}`}
-                      className='btn btn-success'
-                    >
+                    <Link to={`/update/${user._id}`} class='btn btn-success'>
                       Update
                     </Link>
                     <button
-                      className='btn btn-danger'
+                      class='btn btn-danger'
                       onClick={(e) => handleDelete(user._id)}
                     >
                       Delete

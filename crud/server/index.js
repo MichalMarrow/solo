@@ -33,6 +33,7 @@ db.on('connecting', () => {
 
 app.get('/', (req, res) => {
   UserModel.find({})
+  
     .then((user) => res.json(user))
     .catch((err) => res.json(err));
 });
@@ -45,6 +46,7 @@ app.get('/getUser/:id', (req, res) => {
 });
 
 app.post('/createUser', (req, res) => {
+  console.log('req.body', req.body);
   UserModel.create(req.body)
     .then((users) => res.json(users))
     .catch((err) => res.json(err));
@@ -52,9 +54,14 @@ app.post('/createUser', (req, res) => {
 
 app.put('/updateUser/:id', (req, res) => {
   const id = req.params.id;
+  console.log('req', req);
   UserModel.findByIdAndUpdate(
     { _id: id },
-    { name: req.body.name, email: req.body.email, age: req.body.age }
+    {
+      date: req.body.date,
+      bloodPressure: req.body.bloodPressure,
+      heartRate: req.body.heartRate,
+    }
   )
     .then((user) => res.json(user))
     .catch((err) => res.json(err));

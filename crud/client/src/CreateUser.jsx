@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { formatDate } from './utils/dateUtils';
 function CreateUser() {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [age, setAge] = useState();
+  const [date, setDate] = useState(formatDate(new Date()));
+  const [bloodPressure, setbloodPressure] = useState();
+  const [heartRate, setheartRate] = useState();
   const navigate = useNavigate();
 
   const Submit = (e) => {
     e.preventDefault();
+    console.log('blood pressure', bloodPressure);
     axios
-      .post('http://localhost:3001/createUser', { name, email, age })
+      .post('http://localhost:3001/createUser', {
+        date,
+        bloodPressure,
+        heartRate,
+      })
       .then((result) => {
-        console.log(result)
-        navigate('/')
+        console.log(result);
+        navigate('/');
       })
       .catch((err) => console.log(err));
   };
@@ -22,32 +28,33 @@ function CreateUser() {
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
       <div className='w-50 bg-white rounded p-3'>
         <form onSubmit={Submit}>
-          <h2>Add User</h2>
+          <h2>Add Vitals</h2>
           <div className='mb-2'>
-            <label htmlFor=''>Name</label>
+            <label htmlFor=''>Date</label>
             <input
               type='text'
-              placeholder='Enter Name'
+              placeholder='Enter Date'
               className='form-control'
-              onChange={(e) => setName(e.target.value)}
+              value={date} // Set the input's value to the 'date' state
+              onChange={(e) => setDate(e.target.value)}
             ></input>
           </div>
           <div className='mb-2'>
-            <label htmlFor=''>Email</label>
+            <label htmlFor=''>Blood Pressure</label>
             <input
-              type='email'
-              placeholder='Enter Email'
+              type='text'
+              placeholder='Enter Blood Pressure'
               className='form-control'
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setbloodPressure(e.target.value)}
             ></input>
           </div>
           <div className='mb-2'>
-            <label htmlFor=''>Age</label>
+            <label htmlFor=''>Heart Rate</label>
             <input
               type='text'
-              placeholder='Enter Age'
+              placeholder='Enter Heart Rate'
               className='form-control'
-              onChange={(e) => setAge(e.target.value)}
+              onChange={(e) => setheartRate(e.target.value)}
             ></input>
           </div>
           <button className='btn btn-success'>Submit</button>
