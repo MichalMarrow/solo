@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const UserModel = require('./model/Users');
 const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client('YOUR_GOOGLE_CLIENT_ID');
+const client = new OAuth2Client(
+  '727214915174-f8gb1jlgfhsk5j349sv384lt4al8qp14.apps.googleusercontent.com'
+);
 
 const app = express();
 app.use(cors());
@@ -80,7 +82,8 @@ app.post('/google-login', async (req, res) => {
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: 'YOUR_GOOGLE_CLIENT_ID',
+      audience:
+        '727214915174-f8gb1jlgfhsk5j349sv384lt4al8qp14.apps.googleusercontent.com',
     });
     const payload = ticket.getPayload();
     console.log('Google user payload:', payload);

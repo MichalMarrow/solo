@@ -1,0 +1,35 @@
+/* App.css */
+
+/* Background with green, yellow, red horizontal bands */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(
+      to right,
+      #28a745 0%,     /* Green */
+      #ffc107 33%,    /* Yellow */
+      #dc3545 66%,    /* Red */
+      #dc3545 100%
+    );
+  }
+  
+  /* App title styling */
+  .app-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Login button wrapper */
+  .login-box {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
