@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-function Users() {
-  const [user, setUsers] = useState([
+function Vitals() {
+  const [vital, setVital] = useState([
     {
       date: '04/08/2025',
       bloodPressure: '120/80',
@@ -21,11 +21,11 @@ function Users() {
             </tr>
           </thead>
           <tbody>
-            {Users.map((user) => {
+            {Vitals.map((vital) => {
               <tr>
-                <td>{user.date}</td>
-                <td>{user.bloodPressure}</td>
-                <td>{user.heartRate}</td>
+                <td>{vital.date}</td>
+                <td>{vital.bloodPressure}</td>
+                <td>{vital.heartRate}</td>
                 <td>
                   <button>Edit</button>
                   <button>Delete</button>
@@ -39,4 +39,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Vitals;
