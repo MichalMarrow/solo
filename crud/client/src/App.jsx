@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CreateUser from './CreateUser';
 import UpdateUser from './UpdateVital';
-import Users from './Users';
+import Vitals from './Vitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Login } from './Login';
 
@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Login />}></Route>
-          <Route path='/vitals' element={<Users />}></Route>
+          <Route path='/vitals' element={<Vitals />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/create' element={<CreateUser />}></Route>
           <Route path='/update/:id' element={<UpdateUser />}></Route>

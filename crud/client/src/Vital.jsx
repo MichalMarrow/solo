@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Vitals() {
+function Vital() {
   const [vital, setVital] = useState([
     {
       date: '04/08/2025',
@@ -21,11 +21,11 @@ function Vitals() {
             </tr>
           </thead>
           <tbody>
-            {Vitals.map((vital) => {
+            {vital.map((v) => {
               <tr>
-                <td>{vital.date}</td>
-                <td>{vital.bloodPressure}</td>
-                <td>{vital.heartRate}</td>
+                <td>{v.date}</td>
+                <td>{v.bloodPressure}</td>
+                <td>{v.heartRate}</td>
                 <td>
                   <button>Edit</button>
                   <button>Delete</button>
@@ -39,4 +39,4 @@ function Vitals() {
   );
 }
 
-export default Vitals;
+export default Vital;

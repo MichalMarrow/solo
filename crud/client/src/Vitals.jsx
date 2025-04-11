@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-function Users() {
-  const [users, setUsers] = useState([]);
+function Vitals() {
+  const [vitals, setVitals] = useState([]);
   useEffect(() => {
     axios
       .get('http://localhost:3001')
-      .then((result) => setUsers(result.data))
+      .then((result) => setVitals(result.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -20,7 +20,7 @@ function Users() {
       })
       .catch((errr) => console.log(errr));
   };
-  console.log('users', users);
+  console.log('vitals', vitals);
 
   return (
     <div class='d-flex vh-100 bg-primary justify-content-center align-items-center'>
@@ -38,19 +38,19 @@ function Users() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
+            {vitals.map((vital) => {
               return (
-                <tr key={user._id}>
-                  <td>{user.date}</td>
-                  <td>{user.bloodPressure}</td>
-                  <td>{user.heartRate}</td>
+                <tr key={vital._id}>
+                  <td>{vital.date}</td>
+                  <td>{vital.bloodPressure}</td>
+                  <td>{vital.heartRate}</td>
                   <td>
-                    <Link to={`/update/${user._id}`} class='btn btn-success'>
+                    <Link to={`/update/${vital._id}`} class='btn btn-success'>
                       Update
                     </Link>
                     <button
                       class='btn btn-danger'
-                      onClick={(e) => handleDelete(user._id)}
+                      onClick={(e) => handleDelete(vital._id)}
                     >
                       Delete
                     </button>
@@ -65,4 +65,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Vitals;
