@@ -1,5 +1,13 @@
 /* App.css */
 
+.google-login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px; /* Ensures space is reserved */
+    margin-top: 10px;
+  }
+
 /* Background with green, yellow, red horizontal bands */
 .login-container {
     display: flex;

@@ -3,6 +3,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
+import { objDisplay } from 'chai/lib/chai/utils';
 
 export function Login() {
   const navigate = useNavigate();
@@ -66,14 +67,14 @@ export function Login() {
         </form>
 
         <div className='text-center my-3'>or</div>
-
+        <div className='google-login-wrapper'> 
         <GoogleOAuthProvider clientId='727214915174-f8gb1jlgfhsk5j349sv384lt4al8qp14.apps.googleusercontent.com'>
           <GoogleLogin
             onSuccess={handleGoogleLoginSuccess}
             onError={() => setError('Google login failed')}
           />
         </GoogleOAuthProvider>
-
+        </div>
         {error && <div className='text-danger mt-3'>{error}</div>}
       </div>
     </div>
