@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { formatDate } from './utils/dateUtils';
 
-function UpdateUser() {
+function UpdateVital() {
   const { id } = useParams();
   const [date, setDate] = useState('');
   const [bloodPressure, setbloodPressure] = useState('');
@@ -79,4 +79,4 @@ function UpdateUser() {
   );
 }
 
-export default UpdateUser;
+export default UpdateVital;

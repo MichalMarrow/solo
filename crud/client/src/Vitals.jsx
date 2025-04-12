@@ -13,7 +13,7 @@ function Vitals() {
   const handleDelete = (id) => {
     console.log('hitting handleDelete');
     axios
-      .delete('http://localhost:3001/deleteUser/' + id)
+      .delete('http://localhost:3001/deleteVital/' + id)
       .then((res) => {
         console.log(res);
         window.location.reload();

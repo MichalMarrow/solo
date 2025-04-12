@@ -3,7 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from './utils/dateUtils';
 
-function CreateUser() {
+// In the CreateUser component, Axios is used to send a POST request to
+//  a local server running at http://localhost:3001/createUser.
+function AddVitals() {
   const [date, setDate] = useState(formatDate(new Date()));
   const [bloodPressure, setbloodPressure] = useState('');
   const [heartRate, setheartRate] = useState('');
@@ -13,7 +15,7 @@ function CreateUser() {
     e.preventDefault();
     console.log('blood pressure', bloodPressure);
     axios
-      .post('http://localhost:3001/createUser', {
+      .post('http://localhost:3001/AddVitals', {
         date,
         bloodPressure,
         heartRate,
@@ -74,4 +76,4 @@ function CreateUser() {
   );
 }
 
-export default CreateUser;
+export default AddVitals;

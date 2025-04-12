@@ -3,7 +3,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
-import { objDisplay } from 'chai/lib/chai/utils';
+
 
 export function Login() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export function Login() {
       <h1 className='app-title'>CheckYourHealth</h1>
       <div className='login-box'>
         <form onSubmit={handleRegularLogin}>
-          <h3>Login with Username</h3>
+          <h3>Login with Username & Password</h3>
           <input
             type='text'
             placeholder='Username'
@@ -67,6 +67,7 @@ export function Login() {
         </form>
 
         <div className='text-center my-3'>or</div>
+        <dive button></dive>
         <div className='google-login-wrapper'> 
         <GoogleOAuthProvider clientId='727214915174-f8gb1jlgfhsk5j349sv384lt4al8qp14.apps.googleusercontent.com'>
           <GoogleLogin

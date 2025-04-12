@@ -49,14 +49,14 @@ app.get('/getUser/:id', (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.post('/createUser', (req, res) => {
+app.post('/AddVitals', (req, res) => {
   console.log('req.body', req.body);
   UserModel.create(req.body)
     .then((users) => res.json(users))
     .catch((err) => res.json(err));
 });
 
-app.put('/updateUser/:id', (req, res) => {
+app.put('/UpdateVitals/:id', (req, res) => {
   const id = req.params.id;
   console.log('req', req);
   UserModel.findByIdAndUpdate(
@@ -71,7 +71,7 @@ app.put('/updateUser/:id', (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.delete('/deleteUser/:id', (req, res) => {
+app.delete('/deleteVital/:id', (req, res) => {
   const id = req.params.id;
   UserModel.findByIdAndDelete({ _id: id })
     .then((res) => res.json(res))
