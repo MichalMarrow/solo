@@ -18,7 +18,7 @@ function App() {
           <Route path='/vitals' element={<Vitals />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/create' element={<AddVitals />}></Route>
-          <Route path='/update/:id' element={<UpdateVital/>}></Route>
+          <Route path='/update/:id' element={<UpdateVital />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

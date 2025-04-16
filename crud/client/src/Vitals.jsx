@@ -3,12 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 function Vitals() {
   const [vitals, setVitals] = useState([]);
+  const userId = localStorage.getItem('userId'); // Get userId from localStorage
+
   useEffect(() => {
-    axios
-      .get('http://localhost:3001')
-      .then((result) => setVitals(result.data))
-      .catch((err) => console.log(err));
-  }, []);
+    // Check if userId exists before making the API call
+    if (userId) {
+      axios
+        .get(`http://localhost:3001/vitals/${userId}`) // Use the user-specific endpoint
+        .then((result) => setVitals(result.data))
+        .catch((err) => console.log(err));
+    } else {
+      // Handle the case where userId is not available (e.g., user not logged in)
+      console.warn('User ID not found. Unable to fetch vitals.');
+      // Optionally, redirect the user to the login page:
+      // navigate('/login');
+    }
+  }, [userId]); // Re-run the effect if userId changes (e.g., after login)
 
   const handleDelete = (id) => {
     console.log('hitting handleDelete');

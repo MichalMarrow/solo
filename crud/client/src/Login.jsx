@@ -17,9 +17,12 @@ export function Login() {
       const res = await axios.post('http://localhost:3001/google-login', {
         token: credentialResponse.credential,
       });
-      console.log('Google login response:', res.data);
-      localStorage.setItem('authToken', res.data.authToken); 
-      navigate('/vitals');
+
+      if (res && res.data.user._id) {
+        console.log('Google login successful:', res.data);
+        localStorage.setItem('userId', res.data.user._id);
+        navigate('/vitals');
+      }
     } catch (err) {
       console.error('Google login error:', err);
       setError('Google login failed');
@@ -36,7 +39,7 @@ export function Login() {
       });
       localStorage.setItem('userId', res.data.userId);
       console.log('Login response:', res.data);
-      localStorage.setItem('authToken', res.data.authToken); 
+      localStorage.setItem('authToken', res.data.authToken);
       navigate('/vitals');
     } catch (err) {
       console.error('Login error:', err);
@@ -65,9 +68,12 @@ export function Login() {
     <div className='login-container'>
       <h1 className='app-title'>CheckYourHealth</h1>
       <div className='login-box'>
-
         <form onSubmit={isRegistering ? handleRegister : handleRegularLogin}>
-          <h3>{isRegistering ? 'Create an Account' : 'Login with Username & Password'}</h3>
+          <h3>
+            {isRegistering
+              ? 'Create an Account'
+              : 'Login with Username & Password'}
+          </h3>
           <input
             type='text'
             placeholder='Username'
@@ -94,7 +100,9 @@ export function Login() {
             className='btn btn-link'
             onClick={() => setIsRegistering(!isRegistering)}
           >
-            {isRegistering ? 'Already have an account? Login' : 'New here? Create an account'}
+            {isRegistering
+              ? 'Already have an account? Login'
+              : 'New here? Create an account'}
           </button>
         </div>
 

@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const UserModel = require('./model/Users');
-const VitalModel = require('./models/Vital');
+const VitalModel = require('./model/Vitals');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(
   '727214915174-f8gb1jlgfhsk5j349sv384lt4al8qp14.apps.googleusercontent.com'
@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 mongoose.connect(
-  'mongodb+srv://marrowmichal:MpasswordK@crud.oagln7s.mongodb.net/'
+  'mongodb+srv://marrowmichal:MpasswordK@crud.oagln7s.mongodb.net/crud'
 );
 const db = mongoose.connection;
 
@@ -49,20 +49,21 @@ app.get('/getUser/:id', (req, res) => {
     .catch((err) => res.json(err));
 });
 
-
 app.post('/AddVitals', async (req, res) => {
-  const { date, bloodPressure, heartRate } = req.body; // Expecting userId in the request body
-
+  const { date, bloodPressure, heartRate, userId } = req.body;
+  console.log('userId', userId);
   try {
     const newVital = new VitalModel({
-      userId: req.userId, // Get the userId from the authenticated request object = Associate the vital with the user's ID
+      // Get the userId from the authenticated request object = Associate the vital with the user's ID
       date: new Date(date), // Assuming date is sent as a string, convert to Date object
       bloodPressure,
       heartRate,
+      userId: userId,
     });
 
     const savedVital = await newVital.save();
-    res.status(201).json(savedVital); // Respond with the newly created vital data
+    res.json(savedVital);
+    // Respond with the newly created vital data
   } catch (error) {
     console.error('Error adding vital:', error);
     res.status(500).json({ message: 'Failed to add vital' });

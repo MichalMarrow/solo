@@ -11,26 +11,22 @@ function AddVitals() {
   const [heartRate, setheartRate] = useState('');
   const navigate = useNavigate();
 
+  const userId = localStorage.getItem('userId');
+  console.log('userId', userId);
   const Submit = (e) => {
     e.preventDefault();
     console.log('blood pressure', bloodPressure);
+
     axios
-      .post(
-        'http://localhost:3001/AddVitals',
-        {
-          date,
-          bloodPressure,
-          heartRate,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`, // Assuming you use JWT
-          },
-        }
-      )
+      .post('http://localhost:3001/AddVitals', {
+        date,
+        bloodPressure,
+        heartRate,
+        userId: localStorage.getItem('userId'),
+      })
       .then((result) => {
         console.log(result);
-        navigate('/');
+        navigate('/vitals');
       })
       .catch((err) => console.log(err));
   };
