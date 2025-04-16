@@ -15,11 +15,19 @@ function AddVitals() {
     e.preventDefault();
     console.log('blood pressure', bloodPressure);
     axios
-      .post('http://localhost:3001/AddVitals', {
-        date,
-        bloodPressure,
-        heartRate,
-      })
+      .post(
+        'http://localhost:3001/AddVitals',
+        {
+          date,
+          bloodPressure,
+          heartRate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`, // Assuming you use JWT
+          },
+        }
+      )
       .then((result) => {
         console.log(result);
         navigate('/');

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const UserModel = require('./model/Users');
+const VitalModel = require('./models/Vital');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(
   '727214915174-f8gb1jlgfhsk5j349sv384lt4al8qp14.apps.googleusercontent.com'
@@ -37,7 +38,6 @@ db.on('connecting', () => {
 
 app.get('/', (req, res) => {
   UserModel.find({})
-
     .then((user) => res.json(user))
     .catch((err) => res.json(err));
 });
@@ -49,11 +49,24 @@ app.get('/getUser/:id', (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.post('/AddVitals', (req, res) => {
-  console.log('req.body', req.body);
-  UserModel.create(req.body)
-    .then((users) => res.json(users))
-    .catch((err) => res.json(err));
+
+app.post('/AddVitals', async (req, res) => {
+  const { date, bloodPressure, heartRate } = req.body; // Expecting userId in the request body
+
+  try {
+    const newVital = new VitalModel({
+      userId: req.userId, // Get the userId from the authenticated request object = Associate the vital with the user's ID
+      date: new Date(date), // Assuming date is sent as a string, convert to Date object
+      bloodPressure,
+      heartRate,
+    });
+
+    const savedVital = await newVital.save();
+    res.status(201).json(savedVital); // Respond with the newly created vital data
+  } catch (error) {
+    console.error('Error adding vital:', error);
+    res.status(500).json({ message: 'Failed to add vital' });
+  }
 });
 
 app.put('/UpdateVitals/:id', (req, res) => {
@@ -69,6 +82,18 @@ app.put('/UpdateVitals/:id', (req, res) => {
   )
     .then((user) => res.json(user))
     .catch((err) => res.json(err));
+});
+
+//this is referenced in Vital
+app.get('/vitals/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const vitals = await VitalModel.find({ userId: userId });
+    res.json(vitals);
+  } catch (error) {
+    console.error('Error fetching vitals:', error);
+    res.status(500).json({ message: 'Failed to fetch vitals' });
+  }
 });
 
 app.delete('/deleteVital/:id', (req, res) => {
