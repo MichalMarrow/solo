@@ -20,6 +20,38 @@ function Vitals() {
     }
   }, [userId]); // Re-run the effect if userId changes (e.g., after login)
 
+  const checkBP = (bp) => {
+    //first grab sytolic  and dyastolic
+    let bpArray = bp.split('/');
+    let systolic = Number(bpArray[0]);
+    let diastolic = Number(bpArray[1]);
+
+    if (
+      systolic >= 180 ||
+      systolic <= 70 ||
+      diastolic >= 100 ||
+      diastolic <= 50
+    ) {
+      return 'red';
+    }
+    if (systolic >= 150 || systolic < 80 || diastolic >= 90 || diastolic < 60) {
+      return 'yellow';
+    } else {
+      return 'green';
+    }
+  };
+
+  const checkHR = (hr) => {
+    //heart rate check
+    if (hr < 40 || hr > 180) {
+      return 'red';
+    }
+    if (hr < 60 || hr > 100) {
+      return 'yellow';
+    } else {
+      return 'green';
+    }
+  };
   const handleDelete = (id) => {
     console.log('hitting handleDelete');
     axios
@@ -30,46 +62,63 @@ function Vitals() {
       })
       .catch((errr) => console.log(errr));
   };
-  console.log('vitals', vitals);
 
   return (
-    <div class='d-flex vh-100 bg-primary justify-content-center align-items-center'>
-      <div class='w-50 bg-white rounded p-3'>
-        <Link to='/create' class='btn btn-success'>
-          Add +
-        </Link>
-        <table class='table'>
-          <thead>
-            <tr>
-              <th>date</th>
-              <th>Blood Pressure</th>
-              <th>Heart Rate</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vitals.map((vital) => {
-              return (
-                <tr key={vital._id}>
-                  <td>{vital.date}</td>
-                  <td>{vital.bloodPressure}</td>
-                  <td>{vital.heartRate}</td>
-                  <td>
-                    <Link to={`/update/${vital._id}`} class='btn btn-success'>
-                      Update
-                    </Link>
-                    <button
-                      class='btn btn-danger'
-                      onClick={(e) => handleDelete(vital._id)}
+    <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <h1 style={{ color: 'white' }}>Your Vitals</h1>
+        <div className='w-50 bg-white rounded p-3'>
+          <Link to='/create' className='btn btn-success'>
+            Add +
+          </Link>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th style={{ width: '600px' }}>date</th>
+                <th style={{ width: '600px' }}>Blood Pressure</th>
+                <th style={{ width: '600px' }}>Heart Rate</th>
+                <th style={{ width: '600px' }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vitals.map((vital) => {
+                return (
+                  <tr key={vital._id}>
+                    <td>{vital.date}</td>
+                    <td
+                      style={{ backgroundColor: checkBP(vital.bloodPressure) }}
                     >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                      {vital.bloodPressure}
+                    </td>
+                    <td style={{ backgroundColor: checkHR(vital.heartRate) }}>
+                      {vital.heartRate}
+                    </td>
+                    <td>
+                      <Link
+                        to={`/update/${vital._id}`}
+                        className='btn btn-success'
+                      >
+                        Update
+                      </Link>
+                      <button
+                        className='btn btn-danger'
+                        onClick={(e) => handleDelete(vital._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

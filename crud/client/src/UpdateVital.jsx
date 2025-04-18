@@ -9,15 +9,16 @@ function UpdateVital() {
   const [bloodPressure, setbloodPressure] = useState('');
   const [heartRate, setheartRate] = useState('');
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/getUser/' + id)
+      .get('http://localhost:3001/vitals/vital/' + id)
       .then((result) => {
-        console.log(result);
+        console.log('result', result);
         setDate(result.data.date || formatDate(new Date()));
-        setbloodPressure(result.data.bloodPressure);
-        setheartRate(result.data.heartRate);
+        setbloodPressure(result.data.bloodPressure || '');
+        setheartRate(result.data.heartRate || '');
       })
       .catch((err) => console.log(err));
   }, [id]);
@@ -25,14 +26,15 @@ function UpdateVital() {
   const Update = (e) => {
     e.preventDefault();
     axios
-      .put('http://localhost:3001/updateUser/' + id, {
+      .put('http://localhost:3001/updateVital/' + id, {
         date,
         bloodPressure,
         heartRate,
+        userId: localStorage.getItem('userId'),
       })
       .then((result) => {
         console.log(result);
-        navigate('/');
+        navigate('/vitals');
       })
       .catch((err) => console.log(err));
   };

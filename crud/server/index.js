@@ -11,6 +11,13 @@ const client = new OAuth2Client(
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin'); // Ensure same-origin for COOP
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp'); // Ensure resources come from a CORP-enabled server
+  next();
+});
+
 mongoose.connect(
   'mongodb+srv://marrowmichal:MpasswordK@crud.oagln7s.mongodb.net/crud'
 );
@@ -72,13 +79,14 @@ app.post('/AddVitals', async (req, res) => {
 
 app.put('/UpdateVitals/:id', (req, res) => {
   const id = req.params.id;
-  console.log('req', req);
-  UserModel.findByIdAndUpdate(
+  console.log('id', id);
+  VitalModel.findByIdAndUpdate(
     { _id: id },
     {
       date: req.body.date,
       bloodPressure: req.body.bloodPressure,
       heartRate: req.body.heartRate,
+      userId: req.body.userId,
     }
   )
     .then((user) => res.json(user))
@@ -97,9 +105,45 @@ app.get('/vitals/:userId', async (req, res) => {
   }
 });
 
+app.put('/updateVital/:id', (req, res) => {
+  VitalModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      date: req.body.date,
+      bloodPressure: req.body.bloodPressure,
+      heartRate: req.body.heartRate,
+    },
+    { new: true } // <-- This returns the updated document
+  )
+    .then((updatedVital) => {
+      if (!updatedVital) {
+        return res.status(404).json({ message: 'Vital not found' });
+      }
+      res.json(updatedVital);
+    })
+    .catch((err) => {
+      console.error('Error updating vital:', err);
+      res.status(500).json({ message: 'Failed to update vital' });
+    });
+});
+
+app.get('/vitals/vital/:id', (req, res) => {
+  VitalModel.findById(req.params.id)
+    .then((vital) => {
+      console.log('vital here', vital);
+
+      if (!vital) return res.status(404).json({ message: 'Vital not found' });
+      res.json(vital);
+    })
+    .catch((err) => {
+      console.error('Error fetching vital:', err);
+      res.status(500).json({ message: 'Failed to fetch vital' });
+    });
+});
+
 app.delete('/deleteVital/:id', (req, res) => {
   const id = req.params.id;
-  UserModel.findByIdAndDelete({ _id: id })
+  VitalModel.findByIdAndDelete({ _id: id })
     .then((res) => res.json(res))
     .catch((err) => res.json(err));
 });
