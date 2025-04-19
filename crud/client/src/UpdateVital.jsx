@@ -16,7 +16,7 @@ function UpdateVital() {
       .get('http://localhost:3001/vitals/vital/' + id)
       .then((result) => {
         console.log('result', result);
-        setDate(result.data.date || formatDate(new Date()));
+        setDate(formatDate(result.data.date) || formatDate(new Date()));
         setbloodPressure(result.data.bloodPressure || '');
         setheartRate(result.data.heartRate || '');
       })
@@ -40,7 +40,10 @@ function UpdateVital() {
   };
 
   return (
-    <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
+    <div
+      style={{ backgroundColor: '#f8f8f8' }}
+      className='d-flex vh-100 justify-content-center align-items-center'
+    >
       <div className='w-50 bg-white rounded p-3'>
         <form onSubmit={Update}>
           <h2>Update Vitals</h2>

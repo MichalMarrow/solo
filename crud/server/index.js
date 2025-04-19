@@ -58,14 +58,14 @@ app.get('/getUser/:id', (req, res) => {
 
 app.post('/AddVitals', async (req, res) => {
   const { date, bloodPressure, heartRate, userId } = req.body;
-  console.log('userId', userId);
+  console.log('date in backend', date);
   try {
     const newVital = new VitalModel({
       // Get the userId from the authenticated request object = Associate the vital with the user's ID
-      date: new Date(date), // Assuming date is sent as a string, convert to Date object
+      date: date, // Assuming date is sent as a string, convert to Date object
       bloodPressure,
       heartRate,
-      userId: userId,
+      userId,
     });
 
     const savedVital = await newVital.save();

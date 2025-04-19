@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { formatDate } from './utils/dateUtils';
+
 function Vitals() {
   const [vitals, setVitals] = useState([]);
   const userId = localStorage.getItem('userId'); // Get userId from localStorage
@@ -43,7 +45,7 @@ function Vitals() {
 
   const checkHR = (hr) => {
     //heart rate check
-    if (hr < 40 || hr > 180) {
+    if (hr < 40 || hr > 130) {
       return 'red';
     }
     if (hr < 60 || hr > 100) {
@@ -64,7 +66,10 @@ function Vitals() {
   };
 
   return (
-    <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
+    <div
+      style={{ backgroundColor: '#f8f8f8' }}
+      className='d-flex vh-100  justify-content-center align-items-center'
+    >
       <div
         style={{
           display: 'flex',
@@ -72,7 +77,17 @@ function Vitals() {
           alignItems: 'center',
         }}
       >
-        <h1 style={{ color: 'white' }}>Your Vitals</h1>
+        <h1
+          style={{
+            fontSize: '48px',
+            fontWeight: 'bold',
+            background: 'linear-gradient(to right, yellow, green, red)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Your Vitals
+        </h1>{' '}
         <div className='w-50 bg-white rounded p-3'>
           <Link to='/create' className='btn btn-success'>
             Add +
@@ -90,7 +105,7 @@ function Vitals() {
               {vitals.map((vital) => {
                 return (
                   <tr key={vital._id}>
-                    <td>{vital.date}</td>
+                    <td>{formatDate(vital.date)}</td>
                     <td
                       style={{ backgroundColor: checkBP(vital.bloodPressure) }}
                     >
