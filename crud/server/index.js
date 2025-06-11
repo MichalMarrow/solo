@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 mongoose.connect(
-  'mongodb+srv://marrowmichal:password@scratchproject.c9movya.mongodb.net/'
+  'mongodb+srv://marrowmichal:lsufM3XH4jcLoNvR@cluster0.d04glzl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 );
 const db = mongoose.connection;
 
